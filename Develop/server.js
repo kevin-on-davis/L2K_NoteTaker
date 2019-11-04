@@ -33,6 +33,7 @@ app.post("/api/notes", function (req, res) {
         notebook.push(req.body)
         fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(notebook), function (err) {
             if (err) throw err;
+            console.log(`Added note : ${req.body.title}`);
         });
     });
 });
@@ -40,7 +41,7 @@ app.post("/api/notes", function (req, res) {
 app.delete("/api/notes/:id", function (req, res) {
     fs.readFile(path.join(__dirname, "/db/db.json"), function (err, data) {
         notebook = JSON.parse(data);
-        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(notebook.filter(note => note.id != req.params.id)), () => { console.log("Deletion of note successful") });
+        fs.writeFile(path.join(__dirname, "/db/db.json"), JSON.stringify(notebook.filter(note => note.id != req.params.id)), () => { console.log(`Deletion of note ${req.params.id} successful`) });
 
     });
 });
